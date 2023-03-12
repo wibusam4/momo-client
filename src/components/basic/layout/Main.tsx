@@ -12,11 +12,15 @@ const Main: React.FC<MainProps> = ({ children }) => {
     setIsShow(!isShow);
   };
   return (
-    <div className="flex">
-      <Sidebar isShow={isShow}></Sidebar>
-      <Header handel={handelShow}></Header>
-      <div className="">{children}</div>
-    </div>
+   
+      <>
+        <Sidebar isShow={isShow}></Sidebar>
+        <div className={`${isShow ? "md:ml-60" : "md:ml-20"} h-screen duration-300 flex flex-col`}>
+          <Header handel={handelShow}></Header>
+          <div className="h-full">{children}</div>
+        </div>
+      </>
+    
   );
 };
 
