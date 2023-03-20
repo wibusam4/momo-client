@@ -8,12 +8,12 @@
     }
 
     ::-webkit-scrollbar {
-        @apply w-3 bg-transparent
+        @apply w-1 bg-transparent
     }
 
     ;
 
     ::-webkit-scrollbar-thumb {
-        @apply rounded-none bg-primary
+        @apply rounded-none bg-info
     }
 }

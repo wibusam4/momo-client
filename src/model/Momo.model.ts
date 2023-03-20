@@ -10,3 +10,10 @@ export interface FormMomo {
   otp: string;
 }
 
+export interface Momo {
+  _id: string;
+  phone: string;
+  name: string;
+  timeLogin: number;
+  balance: string;
+}

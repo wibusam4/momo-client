@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
         };
         try {
           const user = await axios
-            .post("http://localhost:5000/api/user/login", {
+            .post("https://api.sieuthiapi.site/api/user/login", {
               username,
               password,
             })

@@ -12,15 +12,17 @@ const Main: React.FC<MainProps> = ({ children }) => {
     setIsShow(!isShow);
   };
   return (
-   
-      <>
-        <Sidebar isShow={isShow}></Sidebar>
-        <div className={`${isShow ? "md:ml-60" : "md:ml-20"} h-screen duration-300 flex flex-col`}>
-          <Header handel={handelShow}></Header>
-          <div className="h-full">{children}</div>
-        </div>
-      </>
-    
+    <div>
+      <Sidebar isShow={isShow}></Sidebar>
+      <div
+        className={`${
+          isShow ? "md:ml-60" : "md:ml-20"
+        } flex  h-screen flex-col duration-300`}
+      >
+        <Header handel={handelShow}></Header>
+        <div  className="overflow-scroll h-full">{children}</div>
+      </div>
+    </div>
   );
 };
 

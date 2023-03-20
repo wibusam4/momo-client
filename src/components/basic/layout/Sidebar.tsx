@@ -1,43 +1,57 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Dollar from "~/components/Icons/Dollar";
 import IconHome from "~/components/Icons/Home";
+import User from "~/components/Icons/User";
+import Wallet from "~/components/Icons/Wallet";
 
 interface SidebarProps {
   isShow: boolean;
 }
+const menu = [
+  { name: "Tài Khoản", slug: "/user", icon: <User /> },
+  { name: "Ví Momo", slug: "/momo", icon: <Wallet /> },
+  { name: "Nạp tiền", slug: "/recharge", icon: <Dollar /> },
+];
 const Sidebar: React.FC<SidebarProps> = ({ isShow }) => {
+  const router = useRouter();
   return (
     <div
-      className={`fixed z-30 top-0 bottom-0 flex  ${
+      className={`fixed top-0 bottom-0 z-30 flex  ${
         isShow ? "w-0 md:w-60" : "w-80 md:w-20"
       } flex-col items-center overflow-hidden  bg-gradient-to-b from-accent to-neutral text-base-100 duration-300`}
     >
-      <a
-        className={`${
-          isShow ? "" : "md:justify-center"
-        } mt-3 flex w-full items-center px-3`}
-        href="#"
-      >
-        <svg
-          className="h-8 w-8 fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
-        </svg>
-        <span className={`${isShow ? "" : "md:hidden"} ml-2 text-sm font-bold`}>
-          The App
-        </span>
-      </a>
       <div className="w-full px-2">
-        <div className="mt-[18px] flex w-full flex-col items-center border-t border-gray-700">
+        <Link
+          className={`${
+            isShow ? "" : "md:justify-center"
+          } mt-3 flex w-full items-center px-3 py-2`}
+          href="/"
+        >
+          <svg
+            className="h-8 w-8 fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+          </svg>
+          <span
+            className={`${isShow ? "" : "md:hidden"} ml-2 text-sm font-bold`}
+          >
+            Siêu Thị API
+          </span>
+        </Link>
+      </div>
+      <div className="w-full px-2">
+        {/* <div className="mt-[18px] flex w-full flex-col items-center border-t border-gray-700">
           <a
             className={`${
               isShow ? "" : "md:justify-center"
             } mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-700 hover:text-gray-300`}
             href="#"
           >
-            <IconHome />
+            
             <span
               className={`${
                 isShow ? "" : "md:hidden"
@@ -46,170 +60,30 @@ const Sidebar: React.FC<SidebarProps> = ({ isShow }) => {
               Dasboard
             </span>
           </a>
-          {/* <a
-            className={`${
-              isShow ? "" : "md:justify-center"
-            } mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-700 hover:text-gray-300`}
-            href="#"
-          >
-            <svg
-              className="h-6 w-6 stroke-current"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <span
-              className={`${isShow ? "" : "md:hidden"} ml-2 text-sm font-medium`}
-            >
-              Search
-            </span>
-          </a>
-          <a
-            className={`${
-              isShow ? "" : "md:justify-center"
-            } mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-700 hover:text-gray-300`}
-            href="#"
-          >
-            <svg
-              className="h-6 w-6 stroke-current"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <span
-              className={`${isShow ? "" : "md:hidden"} ml-2 text-sm font-medium`}
-            >
-              Insights
-            </span>
-          </a>
-          <a
-            className={`${
-              isShow ? "" : "md:justify-center"
-            } mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-700 hover:text-gray-300`}
-            href="#"
-          >
-            <svg
-              className="h-6 w-6 stroke-current"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-              />
-            </svg>
-            <span
-              className={`${isShow ? "" : "md:hidden"} ml-2 text-sm font-medium`}
-            >
-              Docs
-            </span>
-          </a> */}
-        </div>
-        <div className="mt-2 flex w-full flex-col items-center border-t border-gray-700">
-          <Link
-            className={`${
-              isShow ? "" : "md:justify-center"
-            } mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-700 hover:text-gray-300`}
-            href="/momo"
-          >
-            <svg
-              className="h-6 w-6 stroke-current"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-              />{" "}
-            </svg>
-            <span
-              className={`${
-                isShow ? "" : "md:hidden"
-              } ml-2 text-sm font-medium`}
-            >
-              Ví Momo
-            </span>
-          </Link>
-          <a
-            className={`${
-              isShow ? "" : "md:justify-center"
-            } mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-700 hover:text-gray-300`}
-            href="#"
-          >
-            <svg
-              className="h-6 w-6 stroke-current"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-              />
-            </svg>
-            <span
-              className={`${
-                isShow ? "" : "md:hidden"
-              } ml-2 text-sm font-medium`}
-            >
-              Settings
-            </span>
-          </a>
-          <a
-            className="relative mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-700 hover:text-gray-300"
-            href="#"
-          >
-            <svg
-              className="h-6 w-6 stroke-current"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-              />
-            </svg>
-            <span
-              className={`${
-                isShow ? "" : "md:hidden"
-              } ml-2 text-sm font-medium`}
-            >
-              Messages
-            </span>
-            <span className="absolute top-0 left-0 mt-2 ml-2 h-2 w-2 rounded-full bg-indigo-500"></span>
-          </a>
+        </div> */}
+        <div className="mt-1 flex w-full flex-col items-center border-t border-base-300">
+          {menu.map((item) => {
+            return (
+              <Link
+                key={item.slug}
+                className={`${
+                  isShow ? "" : "md:justify-center"
+                } mt-2 flex h-12 w-full items-center rounded px-3 duration-300 hover:bg-base-200 hover:text-neutral ${
+                  router.pathname == item.slug ? "bg-info" : ""
+                }`}
+                href={item.slug}
+              >
+                {item.icon}
+                <span
+                  className={`${
+                    isShow ? "" : "md:hidden"
+                  } ml-2 text-sm font-medium`}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
       <a

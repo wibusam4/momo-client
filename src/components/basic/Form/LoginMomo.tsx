@@ -3,7 +3,7 @@ import { Field, Form, Formik, FormikProps } from "formik";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
-import { FormMomo } from "~/model/Momo";
+import { FormMomo } from "~/model/Momo.model";
 
 const LoginMomo = () => {
   const { data: session } = useSession();
@@ -29,7 +29,7 @@ const LoginMomo = () => {
     };
     const config = {
       method: "post",
-      url: "http://localhost:5000/api/user/momo",
+      url: "https://api.sieuthiapi.site/api/user/momo",
       headers: {
         authorization: `Bearer ${session?.token}`,
       },

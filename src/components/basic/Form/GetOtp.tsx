@@ -1,53 +1,19 @@
-import axios from "axios";
 import { Field, Form, Formik, FormikProps } from "formik";
 import { useSession } from "next-auth/react";
-import { toast } from "react-hot-toast";
-import * as Yup from "yup";
-import { FormOtp } from "~/model/Momo";
-
-const LoginSchema = Yup.object().shape({
-  phone: Yup.string().required("Không được để trống"),
-});
+import { useState } from "react";
+import { MomoAction } from "~/actions/Momo.action";
+import { FormOtp } from "~/model/Momo.model";
 
 interface GetOtpProps {
   setGetOtp: any;
 }
 const GetOtp: React.FC<GetOtpProps> = ({ setGetOtp }) => {
+  const [isLoading, setLoading] = useState(false);
   const { data: session } = useSession();
   const handleSubmit = async (values: FormOtp) => {
-    if (values.phone === "") {
-      return toast.error("Vui lòng nhập số điện thoại!", {
-        style: {
-          border: "1px solid white",
-          backgroundColor: "red",
-          color: "white",
-        },
-        iconTheme: {
-          primary: "white",
-          secondary: "red",
-        },
-      });
-    }
-    const data = {
-      action: "GET-OTP",
-      phone: values.phone,
-    };
-    const config = {
-      method: "post",
-      url: "http://localhost:5000/api/user/momo",
-      headers: {
-        authorization: `Bearer ${session?.token}`,
-      },
-      data: data,
-    };
-    await axios(config)
-      .then((result) => {
-        toast.success("Lấy OTP thành công!");
-        setGetOtp(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setLoading(true);
+    const data = await MomoAction.addMomo(values, session?.token);
+    setLoading(false);
   };
   return (
     <Formik
@@ -74,7 +40,9 @@ const GetOtp: React.FC<GetOtpProps> = ({ setGetOtp }) => {
             </div>
 
             <button
-              className={`btn-primary btn mt-4 max-w-xl hover:scale-105`}
+              className={`btn-primary btn mt-4 max-w-xl hover:scale-105 ${
+                isLoading ? "loading" : ""
+              }`}
               type="submit"
             >
               Lấy OTP

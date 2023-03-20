@@ -1,30 +1,36 @@
-import axios from "axios";
-import { GetServerSideProps, type NextPage } from "next";
+import { MomoAction } from "../../actions/Momo.action";
+import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 import Main from "~/components/basic/layout/Main";
 import Meta from "~/components/basic/layout/Meta";
+import { Momo } from "~/model/Momo.model";
+import moment from "moment";
+import { useRouter } from "next/router";
 
-interface Momo {
-  id: string;
-  phone: string;
-  name: string;
-  timeLogin: Date;
-  balance: string;
-}
 interface RootObject {
-  res: Momo[];
+  momoData: Momo[];
 }
-const Momo: React.FC<RootObject> = ({ res }) => {
-  console.log(res);
 
+const Momo: React.FC<RootObject> = ({ momoData }) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const handelDelete = async (value: any) => {
+    const respone = await MomoAction.deleteMomo(
+      { id: value._id, phone: value.phone },
+      session?.token
+    );
+    if (respone) {
+      router.push(router.pathname);
+    }
+  };
   return (
     <>
       <Meta title="API-MOMO" description="API-MOMO" />
       <Main>
-        <div className="flex h-full w-full">
-          <div className="h-full w-full p-2 sm:p-6">
-            <div className="card rounded-box  h-full flex-grow bg-base-300 p-3 sm:p-10">
+        <div className="flex w-full">
+          <div className="w-full p-2 sm:p-6">
+            <div className="card rounded-box flex-grow bg-base-300 p-3 lg:p-7">
               <div className="text-xl font-bold">
                 Danh sách tài khoản Ví Momo
               </div>
@@ -47,21 +53,40 @@ const Momo: React.FC<RootObject> = ({ res }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {res &&
-                        res.map((item, index) => {
+                      {momoData &&
+                        momoData.map((item, index) => {
                           return (
                             <tr key={index}>
                               <th>{index}</th>
                               <td>{item.name}</td>
                               <td>{item.phone}</td>
                               <td>{item.balance}</td>
-                              <td>{new Date(item.timeLogin).toString()}</td>
+                              <td>
+                                {moment(Number(item.timeLogin)).format(
+                                  "DD-MM-YYYY hh:mm:ss"
+                                )}
+                              </td>
                               <td className="flex flex-wrap gap-1">
-                                <button className="btn-primary btn btn-sm">Lịch sử giao dịch</button>
-                                <button className="btn-secondary btn btn-sm">Chuyển tiền</button>
-                                <button className="btn-success btn btn-sm">Rút tiền</button>
-                                <button className="btn-info btn btn-sm">Lấy token</button>
-                                <button className="btn-error btn btn-sm">Xóa</button>
+                                <button className="btn-primary btn-sm btn">
+                                  Lịch sử giao dịch
+                                </button>
+                                <button className="btn-secondary btn-sm btn">
+                                  Chuyển tiền
+                                </button>
+                                <button className="btn-success btn-sm btn">
+                                  Rút tiền
+                                </button>
+                                <button className="btn-info btn-sm btn">
+                                  Lấy token
+                                </button>
+                                <button
+                                  className="btn-error btn-sm btn"
+                                  onClick={() => {
+                                    handelDelete(item);
+                                  }}
+                                >
+                                  Xóa
+                                </button>
                               </td>
                             </tr>
                           );
@@ -82,20 +107,6 @@ export default Momo;
 
 export const getServerSideProps: GetServerSideProps = async (req) => {
   const session = await getSession(req);
-
-  const config = {
-    method: "get",
-    url: "http://localhost:5000/api/user/momo",
-    headers: {
-      authorization: `Bearer ${session?.token}`,
-    },
-  };
-  const res = await axios(config)
-    .then((result) => {
-      return result.data.message;
-    })
-    .catch((error) => {
-      console.log(error.data);
-    });
-  return { props: { res } };
+  const momoData = await MomoAction.getById("get", "user/momo", session?.token);
+  return { props: { momoData } };
 };

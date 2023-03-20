@@ -5,4 +5,23 @@ export interface Account {
   role: string;
   money?: number;
   status: string;
+  limit?: string;
+}
+
+export interface FormSignup {
+  name: string;
+  username: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+export interface FormSignin {
+  username: string;
+  password: string;
+}
+
+export interface FormChangePass {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }

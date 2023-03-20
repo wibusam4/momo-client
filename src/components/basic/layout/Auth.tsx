@@ -38,7 +38,7 @@ const Auth: React.FC<AuthProps> = ({ children, isLogin }) => {
           <div className="mt-3 flex items-center justify-between text-sm text-[#002D74]">
             <p>{isLogin ? "Chưa có tài khoản?" : "Đã có tài khoản?"}</p>
             <Link
-              href={`/auth/${isLogin ? "register" : "login"}`}
+              href={`/auth/${isLogin ? "signup" : "signin"}`}
               className="btn-outline btn-accent btn-sm btn duration-300 hover:scale-110"
             >
               {isLogin ? "Đăng kí" : "Đăng nhập"}
