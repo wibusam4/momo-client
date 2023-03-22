@@ -29,7 +29,7 @@ const LoginMomo = () => {
     };
     const config = {
       method: "post",
-      url: "https://api.sieuthiapi.site/api/user/momo",
+      url: "https://sieuthiapi.site/backend/user/momo",
       headers: {
         authorization: `Bearer ${session?.token}`,
       },

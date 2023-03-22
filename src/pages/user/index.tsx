@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (req) => {
 
   const config = {
     method: "get",
-    url: "https://api.sieuthiapi.site/api/user/infor",
+    url: "https://sieuthiapi.site/backend/user/infor",
     headers: {
       authorization: `Bearer ${session?.token}`,
     },
