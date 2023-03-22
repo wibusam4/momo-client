@@ -1,4 +1,4 @@
-export const API = "https://api.sieuthiapi.site/api/";
+export const API = "https://sieuthiapi.site/backend/";
 
 export const config = (
   method: string,
